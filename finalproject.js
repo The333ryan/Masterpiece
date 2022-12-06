@@ -2,6 +2,7 @@ var scene = 0;
 var sm256 = createFont("Super Mario 256");
 var ocr = createFont("OCR A");
 textFont(sm256);
+var character;
 
 //Ryan Bitmoji
 var drawBitmoji = function(mojiX, mojiY, mojiSize) {
@@ -341,7 +342,8 @@ var drawScene1 = function() {
     background(0, 106, 138);
     fill(255, 255, 255);
     textSize(34);
-    text("Character select", 85, 25);
+    textAlign(CENTER, CENTER);
+    text("Character select", 200, 25);
     stroke(255, 255, 255);
     fill(0, 0, 0);
     for (var i = 0; i < 4; i++) {
@@ -355,14 +357,48 @@ var drawScene1 = function() {
     stroke(0, 0, 0);
     drawEthansBitmoji(350,177,45);
     fill(255, 255, 255);
-    text("Mario", 128,3, 500,500);
-    text("Luigi", 29,3, 500,500);
-    text("Ryan", 229,3, 500,500);
-    text("Ethan", 330,3, 500,500);
+    text("Mario", 128, 3, 500,500);
+    text("Luigi", 29, 3, 500,500);
+    text("Ryan", 229, 3, 500,500);
+    text("Ethan", 330, 3, 500,500);
+    textFont(sm256);
+    mouseClicked = function() {
+        if (mouseX >= 5 && mouseX <= 95 && mouseY >= 150 && mouseY <= 240) {
+            character = "Luigi";
+            scene = 2;
+        }
+        else if (mouseX >= 105 && mouseX <= 195 && mouseY >= 150 && mouseY <= 240) {
+            character = "Mario";
+            scene = 2;
+        }
+        else if (mouseX >= 205 && mouseX <= 295 && mouseY >= 150 && mouseY <= 240) {
+            character = "Ryan";
+            scene = 2;
+        }
+        else if (mouseX >= 305 && mouseX <= 395 && mouseY >= 150 && mouseY <= 240) {
+            character = "Ethan";
+            scene = 2;
+        }
+    };
 };
 
 var drawScene2 = function() {
-    
+    background(140, 0, 0);
+    fill(255, 255, 255);
+    textSize(34);
+    textAlign(CENTER, CENTER);
+    text("Track select", 200, 25);
+    stroke(255, 255, 255);
+    fill(0, 0, 0);
+    for (var i = 0; i < 4; i++) {
+        rect(i*100 + 5, 150, 90, 90);
+    }
+    textSize(9);
+    fill(158, 168, 255);
+    text("Circle Circuit", 50, 247);
+    text("Square Circuit", 150, 247);
+    text("Triangle Circuit", 250, 247);
+    text("Ryan's Racetrack", 350, 247);
 };
 
 draw = function() {
@@ -376,5 +412,8 @@ draw = function() {
     }
     else if (scene === 1) {
         drawScene1();
+    }
+    else if (scene === 2) {
+        drawScene2();
     }
 };
