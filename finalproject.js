@@ -119,16 +119,16 @@ var drawBody = function(bitmojiX,bitmojiY,h)
     fill(222, 222, 222);//shirt color
     rect(bitmojiX-47*p,bitmojiY+57*p,95*p,85*p);//shirt
     fill(222, 222, 222);
-    arc(bitmojiX-39*p,bitmojiY+74*p,30*p,44*p,-237*p,-23*p);//left shoulder
-    arc(bitmojiX+41*p,bitmojiY+73*p,30*p,43*p,-173*p,75*p);//right shoulder
+    arc(bitmojiX-39*p,bitmojiY+74*p,30*p,44*p,-575*p,-94*p);//left shoulder
+    arc(bitmojiX+41*p,bitmojiY+73*p,30*p,43*p,-309*p,138*p);//right shoulder
     fill(219, 174, 107);
-    arc(bitmojiX+0*p,bitmojiY+57*p,22*p,15*p,0*p,180*p);//neckinshirt
+    arc(bitmojiX+0*p,bitmojiY+57*p,22*p,15*p,44*p,349*p);//neckinshirt
     fill(0, 30, 255);
     textSize(29*p);
     fill(0, 0, 0);
     textFont(createFont("TIMES",(42*p)));
     textAlign(LEFT, CENTER);
-    text("EM",bitmojiX+-30*p,bitmojiY+81*p);
+    text("EM",bitmojiX+-30*p,bitmojiY+99*p);
 };
 var drawEthansBitmoji = function(bitmojiX,bitmojiY,h)
 {
