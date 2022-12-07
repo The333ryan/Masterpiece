@@ -113,22 +113,22 @@ var drawHat = function (bitmojiX,bitmojiY,h)
 var drawBody = function(bitmojiX,bitmojiY,h)
 {
     var p=h/100;
-    rectMode(CORNER);
-    fill(219, 174, 107);//armscolor
-    rect(bitmojiX-53*p,bitmojiY+70*p,106*p,66*p);//arms
-    fill(222, 222, 222);//shirt color
-    rect(bitmojiX-47*p,bitmojiY+57*p,95*p,85*p);//shirt
-    fill(222, 222, 222);
-    arc(bitmojiX-39*p,bitmojiY+74*p,30*p,44*p,-575*p,-94*p);//left shoulder
-    arc(bitmojiX+41*p,bitmojiY+73*p,30*p,43*p,-309*p,138*p);//right shoulder
-    fill(219, 174, 107);
-    arc(bitmojiX+0*p,bitmojiY+57*p,22*p,15*p,44*p,349*p);//neckinshirt
-    fill(0, 30, 255);
-    textSize(29*p);
-    fill(0, 0, 0);
-    textFont(createFont("TIMES",(42*p)));
-    textAlign(LEFT, CENTER);
-    text("EM",bitmojiX+-30*p,bitmojiY+99*p);
+rectMode(CORNER);
+fill(219, 174, 107);//armscolor
+rect(bitmojiX-53*p,bitmojiY+70*p,106*p,66*p);//arms
+fill(222, 222, 222);//shirt color
+rect(bitmojiX-47*p,bitmojiY+57*p,95*p,85*p);//shirt
+fill(222, 222, 222);
+arc(bitmojiX-39*p,bitmojiY+74*p,30*p,44*p,-575*p,-94*p);//left shoulder
+arc(bitmojiX+41*p,bitmojiY+73*p,30*p,43*p,-309*p,138*p);//right shoulder
+fill(219, 174, 107);
+arc(bitmojiX+0*p,bitmojiY+57*p,22*p,15*p,44*p,349*p);//neckinshirt
+fill(0, 30, 255);
+textSize(29*p);
+fill(0, 0, 0);
+textFont(createFont("TIMES",(42*p)));
+textAlign(LEFT, CENTER);
+text("EM",bitmojiX+-30*p,bitmojiY+99*p);
 };
 var drawEthansBitmoji = function(bitmojiX,bitmojiY,h)
 {
@@ -345,7 +345,7 @@ var drawScene1 = function() {
     textAlign(CENTER, CENTER);
     text("Character select", 200, 25);
     stroke(255, 255, 255);
-    fill(0, 0, 0);
+    fill(97, 97, 97);
     for (var i = 0; i < 4; i++) {
         rect(i*100 + 5, 150, 90, 90);
     }
@@ -357,10 +357,12 @@ var drawScene1 = function() {
     stroke(0, 0, 0);
     drawEthansBitmoji(350,177,45);
     fill(255, 255, 255);
-    text("Mario", 128, 3, 500,500);
-    text("Luigi", 29, 3, 500,500);
-    text("Ryan", 229, 3, 500,500);
-    text("Ethan", 330, 3, 500,500);
+    textFont(sm256);
+    textSize(15);
+    text("Mario", 128, 253);
+    text("Luigi", 29, 253);
+    text("Ryan", 229, 253);
+    text("Ethan", 330, 253);
     textFont(sm256);
     mouseClicked = function() {
         if (mouseX >= 5 && mouseX <= 95 && mouseY >= 150 && mouseY <= 240) {
@@ -389,7 +391,7 @@ var drawScene2 = function() {
     textAlign(CENTER, CENTER);
     text("Track select", 200, 25);
     stroke(255, 255, 255);
-    fill(0, 0, 0);
+    fill(2, 128, 0);
     for (var i = 0; i < 4; i++) {
         rect(i*100 + 5, 150, 90, 90);
     }
@@ -399,6 +401,24 @@ var drawScene2 = function() {
     text("Square Circuit", 150, 247);
     text("Triangle Circuit", 250, 247);
     text("Ryan's Racetrack", 350, 247);
+    fill(161, 161, 161);
+    ellipse(50, 195, 70, 70);
+    fill(2, 128, 0);
+    ellipse(50, 195, 40, 40);
+    fill(161, 161, 161);
+    rect(115, 160, 70, 70);
+    fill(2, 128, 0);
+    rect(130, 175, 40, 40);
+    fill(161, 161, 161);
+    triangle(250, 161, 215, 230, 285, 230);
+    fill(2, 128, 0);
+    triangle(250, 187, 233, 220, 267, 220);
+    fill(161, 161, 161);
+    quad(315, 160, 335, 160, 335, 230, 315, 230);
+    quad(335, 160, 385, 160, 385, 175, 335, 175);
+    quad(370, 175, 385, 175, 370, 200, 355, 200);
+    quad(370, 230, 385, 230, 370, 200, 355, 200);
+    quad(366, 220, 370, 228, 335, 219, 335, 208);
 };
 
 draw = function() {
