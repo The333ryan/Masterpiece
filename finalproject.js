@@ -1,3 +1,11 @@
+/**
+ * IMPORTANT NOTE: Clicking the screen during a race could result in some weird
+   interdimensional transposition
+ * CONTROLS: UP & DOWN to move, LEFT & RIGHT to steer
+**/
+
+//GLOBAL VARIABLES ----------------------------------------
+
 var scene = 0;
 var sm256 = createFont("Super Mario 256");
 var ocr = createFont("OCR A");
@@ -17,6 +25,10 @@ var cpr = 0;
 var frames = 0;
 var seconds = 0;
 var lap = 1;
+
+//-----------------------------------------------------------
+
+//Bitmojis---------------------------------------------------
 
 //Ryan Bitmoji
 var drawBitmoji = function(mojiX, mojiY, mojiSize) {
@@ -313,6 +325,9 @@ drawMarioBody(bitmojiX,bitmojiY,h);
 drawMarioHat(bitmojiX,bitmojiY,h);
 };
 
+//-----------------------------------------------------------
+
+//Object classes---------------------------------------------
 
 
 //Button class
@@ -339,6 +354,7 @@ Button.prototype.draw = function() {
 };
 
 var start = new Button(150, 315, 100, 50, color(0, 115, 94), "START");
+var replay = new Button(150, 275, 100, 50, color(168, 95, 0), "REPLAY");
 
 //Car
 var Car = function(x, y, color, angle) {
@@ -366,7 +382,9 @@ Car.prototype.draw = function() {
     popMatrix();
 };
 
+//-----------------------------------------------------------
 
+//Scene functions--------------------------------------------
 
 var drawScene0 = function() {
     background(101, 0, 184);
@@ -379,6 +397,8 @@ var drawScene0 = function() {
     text("Our super duper awesome Mario Kart ripoff!", 200, 100);
     text("by Ethan & Ryan", 200, 140);
     start.draw();
+    image(getImage("cute/TreeTall"), 48, 280, 65, 100);
+    image(getImage("cute/TreeTall"), 293, 280, 65, 100);
 };
 var drawScene1 = function() {
     background(0, 106, 138);
@@ -475,7 +495,7 @@ var drawScene2 = function() {
     quad(366, 220, 370, 228, 335, 219, 335, 208);
 };
 
-//Track scene functions
+//Track scene functions - Drawing the tracks
 var drawSquareCircuit = function(){
     background(0, 143, 43);
     fill(148, 143, 143);
@@ -542,6 +562,19 @@ var drawRyansCircuit = function(){
     rect(47, 245, 74, 10);
 };
 
+var drawEnding = function() {
+    background(66, 0, 117);
+    fill(255, 255, 255);
+    textAlign(CENTER);
+    textSize(20);
+    text("You finished in "+seconds+" seconds!", 200, 200);
+    replay.draw();
+};
+
+//-----------------------------------------------------------
+
+//Extra logic------------------------------------------------
+
 if (character === "Mario") {
         r = 255;
         g = 0;
@@ -564,6 +597,12 @@ if (character === "Mario") {
     }
 
 var playerCar = new Car(startingX, startingY, color(r, g, b), 0);    
+
+//Character colors are delayed, couldn't figure out why but it's a cosmetic issue so no big deal
+
+//-----------------------------------------------------------
+
+//And finally, the draw function-----------------------------
 
 draw = function() {
     var carAngle;
@@ -647,12 +686,63 @@ draw = function() {
         startingY = 180;
         drawTriangleCircuit();
         playerCar.draw();
+        fill(21, 0, 255);
+        textSize(20);
+        text("Lap: "+lap, 53, 10);
+        text("Time: "+seconds+"s", 333, 10);
+        frames++;
+        if (cpt === 0 && playerCar.x >= 217 && playerCar.x <= 265 && playerCar.y >= 147 && playerCar.y <= 178) {
+            cpt = 1;
+        }
+        if (cpt === 1 && playerCar.x >= 252 && playerCar.x <= 262 && playerCar.y >= 280 && playerCar.y <= 328) {
+            cpt = 2;
+        }
+        if (cpt === 2 && playerCar.x >= 73 && playerCar.x <= 123 && playerCar.y >= 254 && playerCar.y <= 280) {
+            cpt = 3;
+        }
+        if (cpt === 3 && playerCar.x >= 142 && playerCar.x <= 180 && playerCar.y >= 111 && playerCar.y <= 158) {
+            cpt = 0;
+            lap++;
+        }
     }
     else if (scene === 6) {
         startingY = 90;
         drawRyansCircuit();
         playerCar.draw();
+        fill(21, 0, 255);
+        textSize(20);
+        text("Lap: "+lap, 53, 10);
+        text("Time: "+seconds+"s", 333, 10);
+        frames++;
+        if (cpr === 0 && playerCar.x >= 255 && playerCar.x <= 339 && playerCar.y >= 140 && playerCar.y <= 150) {
+            cpr = 1;
+        }
+        if (cpr === 1 && playerCar.x >= 237 && playerCar.x <= 256 && playerCar.y >= 275 && playerCar.y <= 318) {
+            cpr = 2;
+        }
+        if (cpr === 2 && playerCar.x >= 47 && playerCar.x <= 121 && playerCar.y >= 245 && playerCar.y <= 255) {
+            cpr = 3;
+        }
+        if (cpr === 3 && playerCar.x >= 129 && playerCar.x <= 143 && playerCar.y >= 63 && playerCar.y <= 127) {
+            cpr = 0;
+            lap++;
+        }
     }
+    else if (scene === 7) {
+        drawEnding();
+        frames = 0;
+        mouseClicked = function() {
+            if (mouseX >= replay.x && mouseX <= replay.x+replay.width && mouseY >= replay.y && mouseY <= replay.y+replay.height) {
+                scene = 1;
+                lap = 1;
+                playerCar.x = 80;
+                playerCar.y = 60;
+                playerCar.angle = 0;
+            }
+        };
+    }
+    
+  if (scene > 2 && scene < 7) {
     
     if (keyIsPressed && keyCode === RIGHT) {
         playerCar.angle+=turningSpeed;
@@ -706,6 +796,7 @@ draw = function() {
         }
     }
     
+  }
     
 
     
@@ -722,5 +813,9 @@ draw = function() {
     if (frames >= 60) {
         frames = 0;
         seconds++;
+    }
+    
+    if (lap > 3) {
+        scene = 7;
     }
 };
