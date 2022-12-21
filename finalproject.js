@@ -735,6 +735,7 @@ draw = function() {
             if (mouseX >= replay.x && mouseX <= replay.x+replay.width && mouseY >= replay.y && mouseY <= replay.y+replay.height) {
                 scene = 1;
                 lap = 1;
+                seconds = 0;
                 playerCar.x = 80;
                 playerCar.y = 60;
                 playerCar.angle = 0;
