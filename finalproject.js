@@ -3,6 +3,20 @@ var sm256 = createFont("Super Mario 256");
 var ocr = createFont("OCR A");
 textFont(sm256);
 var character;
+var r = 3;
+var g = 13;
+var b = 137;
+var carSpeed = 3;
+var turningSpeed = 3;
+var startingX = 80;
+var startingY = 60;
+var cpc = 0;
+var cps = 0;
+var cpt = 0;
+var cpr = 0;
+var frames = 0;
+var seconds = 0;
+var lap = 1;
 
 //Ryan Bitmoji
 var drawBitmoji = function(mojiX, mojiY, mojiSize) {
@@ -326,6 +340,34 @@ Button.prototype.draw = function() {
 
 var start = new Button(150, 315, 100, 50, color(0, 115, 94), "START");
 
+//Car
+var Car = function(x, y, color, angle) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.angle = angle;
+};
+
+Car.prototype.draw = function() {
+    rectMode(CENTER);
+    fill(this.color);
+    stroke(0, 0, 0);
+    pushMatrix();
+    translate(this.x, this.y);
+    rotate(this.angle);
+    rect(0, 0, 60, 30);
+    fill(148, 148, 148);
+    rect(-16, -18, 15, 5);
+    rect(-16, 18, 15, 5);
+    rect(16, -18, 15, 5);
+    rect(16, 18, 15, 5);
+    fill(176, 192, 255);
+    rect(20, 0, 10, 15);
+    popMatrix();
+};
+
+
+
 var drawScene0 = function() {
     background(101, 0, 184);
     drawBitmoji(135, 225, 75);
@@ -365,21 +407,33 @@ var drawScene1 = function() {
     text("Ethan", 330, 253);
     textFont(sm256);
     mouseClicked = function() {
-        if (mouseX >= 5 && mouseX <= 95 && mouseY >= 150 && mouseY <= 240) {
+        if (mouseX >= 5 && mouseX <= 95 && mouseY >= 150 && mouseY <= 240 && mouseIsPressed) {
             character = "Luigi";
             scene = 2;
+            r = 0;
+            g = 128;
+            b = 20;
         }
         else if (mouseX >= 105 && mouseX <= 195 && mouseY >= 150 && mouseY <= 240) {
             character = "Mario";
             scene = 2;
+            r = 255;
+            g = 0;
+            b = 0;
         }
         else if (mouseX >= 205 && mouseX <= 295 && mouseY >= 150 && mouseY <= 240) {
             character = "Ryan";
             scene = 2;
+            r = 15;
+            g = 0;
+            b = 255;
         }
         else if (mouseX >= 305 && mouseX <= 395 && mouseY >= 150 && mouseY <= 240) {
             character = "Ethan";
             scene = 2;
+            r = 0;
+            g = 0;
+            b = 0;
         }
     };
 };
@@ -421,7 +475,99 @@ var drawScene2 = function() {
     quad(366, 220, 370, 228, 335, 219, 335, 208);
 };
 
+//Track scene functions
+var drawSquareCircuit = function(){
+    background(0, 143, 43);
+    fill(148, 143, 143);
+    rectMode(CORNER);
+    rect(47,63,298,272,9);
+    fill(0, 143, 43);
+    rect(107,117,175,172,9);
+    fill(247, 255, 0);
+    rect(145,64,13,53);
+    fill(0, 213, 255);
+    rect(283,152,62,13);
+    rect(239,290,13,45);
+    rect(48,246,59,13);
+    
+};
+
+
+var drawCircleCircuit = function(){
+    rectMode(CORNER);
+    background(0, 143, 43); 
+    fill(148, 143, 143);    
+    ellipse(197,201,342,372);   
+    fill(0, 143, 43);   
+    ellipse(194,204,227,263); 
+    fill(247, 255, 0); 
+    rect(185,13,10,59);  
+    fill(0, 217, 255);
+    rect(308, 195, 60, 10);
+    rect(193, 336, 10, 51);
+    rect(26, 195, 55, 10);
+};
+
+
+var drawTriangleCircuit = function(){
+    background(0, 143, 43);
+    rectMode(CORNER);
+    fill(148, 143, 143);
+    triangle(42,328,373,328,186,33);
+    fill(0, 143, 43);
+    triangle(282,560/2,237/2,560/2,382/2,123);
+    fill(247, 255, 0);
+    quad(174,158,180,147,149,111,142,123);
+    fill(0, 213, 255);
+    quad(265,157,258,147,217,168,223,178);
+    rect(252, 280, 10, 48);
+    quad(73,264,78,254,123,270,119,280);
+};
+
+
+var drawRyansCircuit = function(){
+    background(0, 143, 43);
+    fill(148, 143, 143);
+    rectMode(CORNER);
+    rect(47,63,75,272);
+    rect(47,63,298,64);
+    quad(215, 227, 295, 228, 345, 127, 267, 128);
+    quad(296, 225, 374, 330, 297, 327, 216, 226);
+    quad(258, 278, 293, 321, 122, 306, 122, 244);
+    fill(255, 238, 0);
+    rect(129,63,14,64);
+    fill(0, 213, 255);
+    quad(260, 140, 255, 150, 333, 150, 339, 140);
+    quad(246, 275, 256, 277, 249, 318, 237, 316);
+    rect(47, 245, 74, 10);
+};
+
+if (character === "Mario") {
+        r = 255;
+        g = 0;
+        b = 0;
+    }
+    else if (character === "Luigi") {
+        r = 0;
+        g = 128;
+        b = 20;
+    }
+    else if (character === "Ryan") {
+        r = 15;
+        g = 0;
+        b = 255;
+    }
+    else if (character === "Ethan") {
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+
+var playerCar = new Car(startingX, startingY, color(r, g, b), 0);    
+
 draw = function() {
+    var carAngle;
+    
     if (scene === 0) {
         drawScene0();
         mouseClicked = function() {
@@ -435,5 +581,146 @@ draw = function() {
     }
     else if (scene === 2) {
         drawScene2();
+        mouseClicked = function() {
+        if (mouseX >= 5 && mouseX <= 95 && mouseY >= 150 && mouseY <= 240) {
+            scene = 4;
+        }
+        else if (mouseX >= 105 && mouseX <= 195 && mouseY >= 150 && mouseY <= 240) {
+            scene = 3;
+        }
+        else if (mouseX >= 205 && mouseX <= 295 && mouseY >= 150 && mouseY <= 240) {
+            scene = 5;
+        }
+        else if (mouseX >= 305 && mouseX <= 395 && mouseY >= 150 && mouseY <= 240) {
+            scene = 6;
+        }
+    };
+    }
+    else if (scene === 3) {
+        startingX = 90;
+        startingY = 100;
+        drawSquareCircuit();
+        playerCar.draw();
+        fill(21, 0, 255);
+        textSize(20);
+        text("Lap: "+lap, 53, 10);
+        text("Time: "+seconds+"s", 333, 10);
+        frames++;
+        if (cps === 0 && playerCar.x >= 283 && playerCar.x <= 345 && playerCar.y >= 152 && playerCar.y <= 165) {
+            cps = 1;
+        }
+        if (cps === 1 && playerCar.x >= 239 && playerCar.x <= 252 && playerCar.y >= 290 && playerCar.y <= 335) {
+            cps = 2;
+        }
+        if (cps === 2 && playerCar.x >= 48 && playerCar.x <= 107 && playerCar.y >= 246 && playerCar.y <= 259) {
+            cps = 3;
+        }
+        if (cps === 3 && playerCar.x >= 145 && playerCar.x <= 158 && playerCar.y >= 64 && playerCar.y <= 117) {
+            cps = 0;
+            lap++;
+        }
+    }
+    else if (scene === 4) {
+        drawCircleCircuit();
+        playerCar.draw();
+        fill(21, 0, 255);
+        textSize(20);
+        text("Lap: "+lap, 53, 10);
+        text("Time: "+seconds+"s", 333, 10);
+        frames++;
+        if (cpc === 0 && playerCar.x >= 308 && playerCar.x <= 368 && playerCar.y >= 195 && playerCar.y <= 205) {
+            cpc = 1;
+        }
+        if (cpc === 1 && playerCar.x >= 193 && playerCar.x <= 203 && playerCar.y >= 336 && playerCar.y <= 387) {
+            cpc = 2;
+        }
+        if (cpc === 2 && playerCar.x >= 26 && playerCar.x <= 81 && playerCar.y >= 195 && playerCar.y <= 205) {
+            cpc = 3;
+        }
+        if (cpc === 3 && playerCar.x >= 185 && playerCar.x <= 195 && playerCar.y >= 13 && playerCar.y <= 72) {
+            cpc = 0;
+            lap++;
+        }
+    }
+    else if (scene === 5) {
+        startingX = 120;
+        startingY = 180;
+        drawTriangleCircuit();
+        playerCar.draw();
+    }
+    else if (scene === 6) {
+        startingY = 90;
+        drawRyansCircuit();
+        playerCar.draw();
+    }
+    
+    if (keyIsPressed && keyCode === RIGHT) {
+        playerCar.angle+=turningSpeed;
+    }
+    else if (keyIsPressed && keyCode === LEFT) {
+        playerCar.angle-=turningSpeed;
+    }
+    
+    if (playerCar.angle >= 0 && playerCar.angle < 90) {
+        carAngle = playerCar.angle;
+        if (keyIsPressed && keyCode === UP) {
+            playerCar.x+=carSpeed*(1-carAngle/90);
+            playerCar.y+=carSpeed*(carAngle/90);
+        }
+        else if (keyIsPressed && keyCode === DOWN) {
+            playerCar.x-=carSpeed*(1-carAngle/90);
+            playerCar.y-=carSpeed*(carAngle/90);
+        }
+    }
+    else if (playerCar.angle >= 90 && playerCar.angle < 180) {
+        carAngle = playerCar.angle;
+        if (keyIsPressed && keyCode === UP) {
+            playerCar.x+=carSpeed*(1-carAngle/90);
+            playerCar.y+=carSpeed*(2-carAngle/90);
+        }
+        else if (keyIsPressed && keyCode === DOWN) {
+            playerCar.x-=carSpeed*(1-carAngle/90);
+            playerCar.y-=carSpeed*(2-carAngle/90);
+        }
+    }
+    else if (playerCar.angle >= 180 && playerCar.angle < 270) {
+        carAngle = playerCar.angle-180;
+        if (keyIsPressed && keyCode === UP) {
+            playerCar.x-=carSpeed*(1-carAngle/90);
+            playerCar.y-=carSpeed*(carAngle/90);
+        }
+        else if (keyIsPressed && keyCode === DOWN) {
+            playerCar.x+=carSpeed*(1-carAngle/90);
+            playerCar.y+=carSpeed*(carAngle/90);
+        }
+    }
+    else if (playerCar.angle >= 270 && playerCar.angle < 360) {
+        carAngle = playerCar.angle-180;
+        if (keyIsPressed && keyCode === UP) {
+            playerCar.x-=carSpeed*(1-carAngle/90);
+            playerCar.y-=carSpeed*(2-carAngle/90);
+        }
+        else if (keyIsPressed && keyCode === DOWN) {
+            playerCar.x+=carSpeed*(1-carAngle/90);
+            playerCar.y+=carSpeed*(2-carAngle/90);
+        }
+    }
+    
+    
+
+    
+    if (playerCar.angle%360 === 0) {
+        playerCar.angle = 0;
+    }
+    if (playerCar.angle > 360) {
+        playerCar.angle = turningSpeed;
+    }
+    if (playerCar.angle < 0) {
+        playerCar.angle = 360-turningSpeed;
+    }
+    
+    if (frames >= 60) {
+        frames = 0;
+        seconds++;
     }
 };
